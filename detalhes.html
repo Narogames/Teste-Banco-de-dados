@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Funcionário</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        .detalhes {
+            padding: 20px;
+            margin: 10px auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 50%;
+            background-color: white;
+        }
+        .detalhes p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .detalhes .cor {
+            padding: 10px;
+            color: white;
+            font-weight: bold;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Detalhes do Funcionário</h1>
+    <div class="detalhes">
+        <p><strong>Nome:</strong> <span id="nomeFuncionario"></span></p>
+        <p><strong>Setor:</strong> <span id="setorFuncionario"></span></p>
+        <p><strong>Cor:</strong> <span id="corFuncionario" class="cor"></span></p>
+    </div>
+    <button onclick="window.history.back()">Voltar</button>
+
+    <script>
+        // Função que carrega os detalhes do funcionário a partir do servidor
+        function carregarDetalhes() {
+            const funcionarioId = localStorage.getItem('funcionarioId');
+
+            if (!funcionarioId) {
+                alert('ID do funcionário não encontrado no localStorage!');
+                return;
+            }
+
+            // Fazendo uma requisição GET para buscar os dados do funcionário
+            fetch(`/detalhes?id=${funcionarioId}`)
+                .then(response => response.json())  // Transformar a resposta em JSON
+                .then(data => {
+                    if (data && data.nome) {
+                        // Preenche os campos com as informações do funcionário
+                        document.getElementById('nomeFuncionario').textContent = data.nome;
+                        document.getElementById('setorFuncionario').textContent = data.setor;
+                        document.getElementById('corFuncionario').textContent = data.cor;
+
+                        // Tenta aplicar a cor de fundo ao campo 'cor'
+                        // Se for uma cor válida, usa ela. Caso contrário, aplica 'white'
+                        const cor = data.cor.toLowerCase();
+                        const corValida = [
+                            'red', 'green', 'blue', 'yellow', 'black', 'white', 'gray', 
+                            'purple', 'orange', 'pink', 'brown', 'violet', 'indigo'
+                        ];
+
+                        // Verifica se a cor é válida, senão, define como 'white'
+                        if (corValida.includes(cor)) {
+                            document.getElementById('corFuncionario').style.backgroundColor = cor;
+                        } else {
+                            document.getElementById('corFuncionario').style.backgroundColor = 'white';
+                        }
+                    } else {
+                        alert('Funcionário não encontrado!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar detalhes do funcionário:', error);
+                    alert('Erro ao carregar os dados do funcionário.');
+                });
+        }
+
+        // Carrega os dados assim que a página é carregada
+        window.onload = carregarDetalhes;
+    </script>
+</body>
+</html>

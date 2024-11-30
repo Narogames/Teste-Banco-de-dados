@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Funcionário</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        .detalhes {
+            padding: 20px;
+            margin: 10px auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 50%;
+            background-color: white;
+        }
+        .detalhes p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .detalhes .cor {
+            padding: 10px;
+            color: white;
+            font-weight: bold;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Detalhes do Funcionário</h1>
+    <div class="detalhes">
+        <p><strong>Nome:</strong> <span><%= nome %></span></p>
+        <p><strong>Setor:</strong> <span><%= setor %></span></p>
+        <p><strong>Cor:</strong> <span class="cor" style="background-color:<%= cor %>"><%= cor %></span></p>
+    </div>
+    <button onclick="window.history.back()">Voltar</button>
+</body>
+</html>

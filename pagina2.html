@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Sucesso</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Funcionário Cadastrado com Sucesso!</h1>
+    <p>O ID do funcionário é: <span id="idFuncionario"></span></p>
+
+    <script>
+        // Pega o ID do novo funcionário a partir da URL (query string)
+        const urlParams = new URLSearchParams(window.location.search);
+        const funcionarioId = urlParams.get('id');
+
+        // Armazena o ID no localStorage para uso posterior
+        if (funcionarioId) {
+            localStorage.setItem('funcionarioId', funcionarioId);
+            document.getElementById('idFuncionario').textContent = funcionarioId;
+        } else {
+            alert('ID do funcionário não encontrado!');
+        }
+
+        // Redireciona para a página de detalhes após o clique no botão
+        function irParaDetalhes() {
+            if (funcionarioId) {
+                window.location.href = `/detalhes?id=${funcionarioId}`;
+            }
+        }
+    </script>
+
+    <button onclick="irParaDetalhes()">Ver Detalhes</button>
+</body>
+</html>
